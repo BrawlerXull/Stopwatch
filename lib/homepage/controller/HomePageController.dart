@@ -5,12 +5,13 @@ class HomepageController extends GetxController {
   RxInt secondDigit = 0.obs;
   RxInt minuteDigit = 0.obs;
   RxInt hourDigit = 0.obs;
-  bool isStarted = false;
+  RxBool isStarted = false.obs;
   Timer? _timer;
+  RxList<String> laps = <String>[].obs;
 
   void start() {
-    isStarted = !isStarted;
-    if (isStarted) {
+    isStarted.value = !isStarted.value;
+    if (isStarted.value) {
       _timer = Timer.periodic(Duration(seconds: 1), (timer) {
         secondDigit.value++;
         if (secondDigit.value > 59) {
@@ -27,11 +28,15 @@ class HomepageController extends GetxController {
     }
   }
 
-  void Reset() {
+  void addLaps(String lap) {
+    laps.add(lap);
+  }
+
+  void reset() {
     _timer?.cancel();
     secondDigit.value = 0;
     minuteDigit.value = 0;
     hourDigit.value = 0;
-    isStarted = false;
+    isStarted.value = false;
   }
 }

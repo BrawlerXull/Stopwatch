@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/instance_manager.dart';
+import 'package:stopwatch/homepage/controller/HomePageController.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,44 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int secondDigit = 0;
-  int minuteDigit = 0;
-  int hourDigit = 0;
-  bool isStarted = false;
-  Timer? _timer;
-
-  List<String> laps = [];
-
-  void Start() {
-    setState(() {
-      isStarted = !isStarted;
-    });
-    isStarted
-        ? _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-            setState(() {
-              secondDigit++;
-              secondDigit > 59 ? {minuteDigit++, secondDigit = 0} : null;
-              minuteDigit > 59 ? {hourDigit++, minuteDigit = 0} : null;
-            });
-          })
-        : _timer?.cancel();
-  }
-
-  void AddLaps(String lap) {
-    setState(() {
-      laps.add(lap);
-    });
-  }
-
-  void Reset() {
-    _timer?.cancel();
-    setState(() {
-      secondDigit = 0;
-      minuteDigit = 0;
-      hourDigit = 0;
-      isStarted = false;
-    });
-  }
+  final HomepageController controller = Get.put(HomepageController());
 
   @override
   Widget build(BuildContext context) {
@@ -58,38 +24,43 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
-                "$hourDigit:$minuteDigit:$secondDigit",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 70,
+              Obx(
+                () => Text(
+                  "${controller.hourDigit.toString()}: ${controller.minuteDigit.toString()}: ${controller.secondDigit.toString()}",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 70,
+                  ),
                 ),
               ),
               Container(
-                height: 350,
-                width: 350,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color(0xFF252526),
-                ),
-                child: ListView.builder(
-                    itemCount: laps.length,
-                    itemBuilder: (context, index) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            "Lap : ${index + 1}",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          ),
-                          Text(
-                            laps[index],
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          )
-                        ],
-                      );
-                    }),
-              ),
+                  height: 350,
+                  width: 350,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xFF252526),
+                  ),
+                  child: Obx(
+                    () => ListView.builder(
+                        itemCount: controller.laps.length,
+                        itemBuilder: (context, index) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "Lap : ${index + 1}",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                              Text(
+                                controller.laps[index],
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              )
+                            ],
+                          );
+                        }),
+                  )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -98,13 +69,13 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: Colors.green,
                     ),
                     onPressed: () {
-                      Start();
-                      print(secondDigit);
+                      controller.start();
+                      print(controller.secondDigit.value);
                     },
-                    child: Text(
-                      isStarted ? "Pause" : "Start",
-                      style: TextStyle(color: Colors.white, fontSize: 30),
-                    ),
+                    child: Obx(() => Text(
+                          controller.isStarted.value ? "Pause" : "Start",
+                          style: TextStyle(color: Colors.white, fontSize: 30),
+                        )),
                   ),
                   GestureDetector(
                     child: const Icon(
@@ -113,9 +84,10 @@ class _HomePageState extends State<HomePage> {
                       size: 30,
                     ),
                     onTap: () {
-                      String lap = "$hourDigit:$minuteDigit:$secondDigit";
-                      laps.add(lap);
-                      print(laps);
+                      String lap =
+                          "${controller.hourDigit.toString()}: ${controller.minuteDigit.toString()}: ${controller.secondDigit.toString()}";
+                      controller.addLaps(lap);
+                      print(controller.laps);
                     },
                   ),
                   TextButton(
@@ -123,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: Colors.green,
                     ),
                     onPressed: () {
-                      Reset();
+                      controller.reset();
                     },
                     child: const Text(
                       "Reset",
