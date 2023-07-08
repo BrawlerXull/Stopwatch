@@ -12,7 +12,7 @@ class HomepageController extends GetxController {
   void start() {
     isStarted.value = !isStarted.value;
     if (isStarted.value) {
-      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         secondDigit.value++;
         if (secondDigit.value > 59) {
           minuteDigit.value++;

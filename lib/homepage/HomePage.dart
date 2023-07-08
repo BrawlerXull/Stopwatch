@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
@@ -18,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0E1116),
+      backgroundColor: const Color(0xFF0E1116),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -38,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                   width: 350,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color(0xFF252526),
+                    color: const Color(0xFF252526),
                   ),
                   child: Obx(
                     () => ListView.builder(
@@ -49,12 +47,12 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text(
                                 "Lap : ${index + 1}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 20),
                               ),
                               Text(
                                 controller.laps[index],
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 20),
                               )
                             ],
@@ -74,7 +72,8 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Obx(() => Text(
                           controller.isStarted.value ? "Pause" : "Start",
-                          style: TextStyle(color: Colors.white, fontSize: 30),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 30),
                         )),
                   ),
                   GestureDetector(
