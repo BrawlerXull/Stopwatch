@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,9 +10,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int secondDigit = 0;
+  int secondDigit = 55;
   int minuteDigit = 0;
   int hourDigit = 0;
+  bool isStarted = false;
+  Timer? _timer;
+
+  void Start() {
+    setState(() {
+      isStarted = !isStarted;
+    });
+    isStarted
+        ? _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+            setState(() {
+              secondDigit++;
+              secondDigit > 59 ? {minuteDigit++, secondDigit = 0} : null;
+              minuteDigit > 59 ? {hourDigit++, minuteDigit = 0} : null;
+            });
+          })
+        : _timer?.cancel();
+  }
+
+  void Reset() {
+    _timer?.cancel();
+    setState(() {
+      secondDigit = 0;
+      minuteDigit = 0;
+      hourDigit = 0;
+      isStarted = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,13 +72,16 @@ class _HomePageState extends State<HomePage> {
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.green,
                     ),
-                    onPressed: null,
+                    onPressed: () {
+                      Start();
+                      print(secondDigit);
+                    },
                     child: Text(
-                      "Start",
+                      isStarted ? "Pause" : "Start",
                       style: TextStyle(color: Colors.white, fontSize: 30),
                     ),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.flag,
                     color: Colors.white,
                     size: 30,
@@ -57,8 +90,10 @@ class _HomePageState extends State<HomePage> {
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.green,
                     ),
-                    onPressed: null,
-                    child: Text(
+                    onPressed: () {
+                      Reset();
+                    },
+                    child: const Text(
                       "Reset",
                       style: TextStyle(color: Colors.white, fontSize: 30),
                     ),
