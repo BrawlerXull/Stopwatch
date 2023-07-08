@@ -1,16 +1,14 @@
-# stopwatch
+# Getx Stopwatch
 
-A new Flutter project.
+## It's under developement 
 
-## Getting Started
+#### Implemented Laps feature in Stopwatch app
 
-This project is a starting point for a Flutter application.
+#### Used GetX for State Management
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<img src="https://github.com/BrawlerXull/Stopwatch/assets/111864031/6d178c9c-beaa-415d-b7c6-15c95931a11b" alt="Simulator Screenshot - iPhone 14 Pro Max - 2023-07-08 at 13 55 39" height="500" />
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="https://github.com/BrawlerXull/Stopwatch/assets/111864031/72373e4e-ebdb-482d-a50d-77de0ee03bd8" alt="Simulator Screenshot - iPhone 14 Pro Max - 2023-07-08 at 13 55 57" height="500" />
+
+<img src="https://github.com/BrawlerXull/Stopwatch/assets/111864031/0bffa964-d601-42be-92a8-97fbd459228c" alt="Simulator Screenshot - iPhone 14 Pro Max - 2023-07-08 at 13 56 09" height="500" />
