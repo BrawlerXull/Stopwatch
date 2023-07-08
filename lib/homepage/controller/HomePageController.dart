@@ -33,6 +33,7 @@ class HomepageController extends GetxController {
   }
 
   void reset() {
+    laps.value = [];
     _timer?.cancel();
     secondDigit.value = 0;
     minuteDigit.value = 0;
