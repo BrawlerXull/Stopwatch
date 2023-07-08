@@ -10,11 +10,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int secondDigit = 55;
+  int secondDigit = 0;
   int minuteDigit = 0;
   int hourDigit = 0;
   bool isStarted = false;
   Timer? _timer;
+
+  List<String> laps = [];
 
   void Start() {
     setState(() {
@@ -29,6 +31,12 @@ class _HomePageState extends State<HomePage> {
             });
           })
         : _timer?.cancel();
+  }
+
+  void AddLaps(String lap) {
+    setState(() {
+      laps.add(lap);
+    });
   }
 
   void Reset() {
@@ -64,6 +72,23 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(10),
                   color: Color(0xFF252526),
                 ),
+                child: ListView.builder(
+                    itemCount: laps.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            "Lap : ${index + 1}",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                          Text(
+                            laps[index],
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          )
+                        ],
+                      );
+                    }),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -81,10 +106,17 @@ class _HomePageState extends State<HomePage> {
                       style: TextStyle(color: Colors.white, fontSize: 30),
                     ),
                   ),
-                  const Icon(
-                    Icons.flag,
-                    color: Colors.white,
-                    size: 30,
+                  GestureDetector(
+                    child: const Icon(
+                      Icons.flag,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onTap: () {
+                      String lap = "$hourDigit:$minuteDigit:$secondDigit";
+                      laps.add(lap);
+                      print(laps);
+                    },
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
