@@ -1,7 +1,8 @@
+
 import 'package:get/state_manager.dart';
 import 'dart:async';
 
-class HomepageController extends GetxController {
+class StopWatchPageController extends GetxController {
   RxInt secondDigit = 0.obs;
   RxInt minuteDigit = 0.obs;
   RxInt hourDigit = 0.obs;
