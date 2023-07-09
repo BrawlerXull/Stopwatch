@@ -39,27 +39,30 @@ class _PomodoroPageState extends State<PomodoroPage> {
               const SizedBox(
                 height: 80,
               ),
-              CircularCountDownTimer(
-                autoStart: false,
-                controller: _controller,
-                width: MediaQuery.of(context).size.width / 2,
-                height: MediaQuery.of(context).size.width / 2,
-                duration: controller.valueTimer.value,
-                isTimerTextShown: true,
-                isReverseAnimation: false,
-                isReverse: true,
-                textStyle: const TextStyle(
-                    fontSize: 70.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-                textFormat: CountdownTextFormat.S,
-                fillColor: Colors.red,
-                ringColor: Colors.blue,
-                onComplete: () {
-                  Timer(Duration(seconds: controller.valueBreak.value), () {
-                    _controller.start();
-                  });
-                },
+              Obx(
+                () => CircularCountDownTimer(
+                  autoStart: false,
+                  controller: _controller,
+                  width: MediaQuery.of(context).size.width / 2,
+                  height: MediaQuery.of(context).size.width / 2,
+                  duration: controller.valueTimer.value,
+                  isTimerTextShown: true,
+                  isReverseAnimation: false,
+                  isReverse: true,
+                  textStyle: const TextStyle(
+                      fontSize: 70.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                  textFormat: CountdownTextFormat.S,
+                  fillColor: Colors.red,
+                  ringColor: Colors.blue,
+                  onComplete: () {
+                    Timer(Duration(seconds: controller.valueBreak.value), () {
+                      _controller.restart(
+                          duration: controller.valueTimer.value);
+                    });
+                  },
+                ),
               ),
               const SizedBox(
                 height: 80,
@@ -116,9 +119,9 @@ class _PomodoroPageState extends State<PomodoroPage> {
               ),
               TextButton(
                 onPressed: () {
-                  _controller.start();
+                  _controller.restart(duration: controller.valueTimer.value);
                 },
-                child: Text("Set!"),
+                child: const Text("Set!"),
               )
             ],
           ),
