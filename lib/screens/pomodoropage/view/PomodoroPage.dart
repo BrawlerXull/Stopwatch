@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:stopwatch/screens/pomodoropage/controller/PomodoroPageController.dart';
 
 class PomodoroPage extends StatefulWidget {
   const PomodoroPage({super.key});
@@ -12,9 +15,8 @@ class PomodoroPage extends StatefulWidget {
 
 class _PomodoroPageState extends State<PomodoroPage> {
   final CountDownController _controller = CountDownController();
-  int _valueTimer = 10;
-  int _valueBreak = 10;
-  // DateTime? _time;
+  final PomodoroPageController controller = PomodoroPageController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +26,7 @@ class _PomodoroPageState extends State<PomodoroPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               const Text(
@@ -34,14 +36,15 @@ class _PomodoroPageState extends State<PomodoroPage> {
                     fontSize: 40,
                     fontWeight: FontWeight.bold),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80,
               ),
               CircularCountDownTimer(
+                autoStart: false,
                 controller: _controller,
                 width: MediaQuery.of(context).size.width / 2,
                 height: MediaQuery.of(context).size.width / 2,
-                duration: 10,
+                duration: controller.valueTimer.value,
                 isTimerTextShown: true,
                 isReverseAnimation: false,
                 isReverse: true,
@@ -52,15 +55,20 @@ class _PomodoroPageState extends State<PomodoroPage> {
                 textFormat: CountdownTextFormat.S,
                 fillColor: Colors.red,
                 ringColor: Colors.blue,
+                onComplete: () {
+                  Timer(Duration(seconds: controller.valueBreak.value), () {
+                    _controller.start();
+                  });
+                },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Timer Minutes",
+                    "Timer Seconds",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -70,16 +78,14 @@ class _PomodoroPageState extends State<PomodoroPage> {
                   const SizedBox(
                     width: 10,
                   ),
-                  NumberPicker(
-                    minValue: 1,
-                    maxValue: 60,
-                    value: _valueTimer,
-                    onChanged: (value) {
-                      setState(() {
-                        _valueTimer = value;
-                      });
-                    },
-                  )
+                  Obx(() => NumberPicker(
+                        minValue: 1,
+                        maxValue: 60,
+                        value: controller.valueTimer.value,
+                        onChanged: (value) {
+                          controller.change_timer_value(value);
+                        },
+                      ))
                 ],
               ),
               Row(
@@ -96,18 +102,24 @@ class _PomodoroPageState extends State<PomodoroPage> {
                   const SizedBox(
                     width: 10,
                   ),
-                  NumberPicker(
-                    minValue: 1,
-                    maxValue: 60,
-                    value: _valueBreak,
-                    onChanged: (value) {
-                      setState(() {
-                        _valueBreak = value;
-                      });
-                    },
-                  ),
+                  Obx(
+                    () => NumberPicker(
+                      minValue: 1,
+                      maxValue: 60,
+                      value: controller.valueBreak.value,
+                      onChanged: (value) {
+                        controller.change_break_value(value);
+                      },
+                    ),
+                  )
                 ],
               ),
+              TextButton(
+                onPressed: () {
+                  _controller.start();
+                },
+                child: Text("Set!"),
+              )
             ],
           ),
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stopwatch/screens/pomodoropage/view/PomodoroPage.dart';
-import 'package:stopwatch/screens/stopwatchpage/view/HomePage.dart';
+import 'package:stopwatch/screens/stopwatchpage/view/StopWatchPage.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
