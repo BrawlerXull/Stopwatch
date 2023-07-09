@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
-import 'package:stopwatch/homepage/controller/HomePageController.dart';
+import 'package:stopwatch/screens/stopwatchpage/controller/HomePageController.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class StopWatchPage extends StatefulWidget {
+  const StopWatchPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<StopWatchPage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<StopWatchPage> {
   final HomepageController controller = Get.put(HomepageController());
 
   @override
