@@ -11,8 +11,6 @@ class StopWatchPage extends StatefulWidget {
 }
 
 class _StopWatchPageState extends State<StopWatchPage> {
-  final StopWatchPageController controller = Get.put(StopWatchPageController());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +22,7 @@ class _StopWatchPageState extends State<StopWatchPage> {
             children: [
               Obx(
                 () => Text(
-                  "${controller.hourDigit.toString()}: ${controller.minuteDigit.toString()}: ${controller.secondDigit.toString()}",
+                  "${Get.find<StopWatchPageController>().hourDigit.toString()}: ${Get.find<StopWatchPageController>().minuteDigit.toString()}: ${Get.find<StopWatchPageController>().secondDigit.toString()}",
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 70,
@@ -40,7 +38,8 @@ class _StopWatchPageState extends State<StopWatchPage> {
                   ),
                   child: Obx(
                     () => ListView.builder(
-                        itemCount: controller.laps.length,
+                        itemCount:
+                            Get.find<StopWatchPageController>().laps.length,
                         itemBuilder: (context, index) {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -51,7 +50,7 @@ class _StopWatchPageState extends State<StopWatchPage> {
                                     color: Colors.white, fontSize: 20),
                               ),
                               Text(
-                                controller.laps[index],
+                                Get.find<StopWatchPageController>().laps[index],
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 20),
                               )
@@ -67,11 +66,15 @@ class _StopWatchPageState extends State<StopWatchPage> {
                       backgroundColor: Colors.green,
                     ),
                     onPressed: () {
-                      controller.start();
-                      print(controller.secondDigit.value);
+                      Get.find<StopWatchPageController>().start();
+                      print(Get.find<StopWatchPageController>()
+                          .secondDigit
+                          .value);
                     },
                     child: Obx(() => Text(
-                          controller.isStarted.value ? "Pause" : "Start",
+                          Get.find<StopWatchPageController>().isStarted.value
+                              ? "Pause"
+                              : "Start",
                           style: const TextStyle(
                               color: Colors.white, fontSize: 30),
                         )),
@@ -84,9 +87,9 @@ class _StopWatchPageState extends State<StopWatchPage> {
                     ),
                     onTap: () {
                       String lap =
-                          "${controller.hourDigit.toString()}: ${controller.minuteDigit.toString()}: ${controller.secondDigit.toString()}";
-                      controller.addLaps(lap);
-                      print(controller.laps);
+                          "${Get.find<StopWatchPageController>().hourDigit.toString()}: ${Get.find<StopWatchPageController>().minuteDigit.toString()}: ${Get.find<StopWatchPageController>().secondDigit.toString()}";
+                      Get.find<StopWatchPageController>().addLaps(lap);
+                      print(Get.find<StopWatchPageController>().laps);
                     },
                   ),
                   TextButton(
@@ -94,7 +97,7 @@ class _StopWatchPageState extends State<StopWatchPage> {
                       backgroundColor: Colors.green,
                     ),
                     onPressed: () {
-                      controller.reset();
+                      Get.find<StopWatchPageController>().reset();
                     },
                     child: const Text(
                       "Reset",

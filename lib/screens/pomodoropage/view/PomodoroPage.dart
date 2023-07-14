@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/state_manager.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:stopwatch/screens/pomodoropage/controller/PomodoroPageController.dart';
 
@@ -15,7 +17,6 @@ class PomodoroPage extends StatefulWidget {
 
 class _PomodoroPageState extends State<PomodoroPage> {
   final CountDownController _controller = CountDownController();
-  final PomodoroPageController controller = PomodoroPageController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class _PomodoroPageState extends State<PomodoroPage> {
                   controller: _controller,
                   width: MediaQuery.of(context).size.width / 2,
                   height: MediaQuery.of(context).size.width / 2,
-                  duration: controller.valueTimer.value,
+                  duration: Get.find<PomodoroPageController>().valueTimer.value,
                   isTimerTextShown: true,
                   isReverseAnimation: false,
                   isReverse: true,
@@ -57,9 +58,15 @@ class _PomodoroPageState extends State<PomodoroPage> {
                   fillColor: Colors.red,
                   ringColor: Colors.blue,
                   onComplete: () {
-                    Timer(Duration(seconds: controller.valueBreak.value), () {
+                    Timer(
+                        Duration(
+                            seconds: Get.find<PomodoroPageController>()
+                                .valueBreak
+                                .value), () {
                       _controller.restart(
-                          duration: controller.valueTimer.value);
+                          duration: Get.find<PomodoroPageController>()
+                              .valueTimer
+                              .value);
                     });
                   },
                 ),
@@ -84,9 +91,11 @@ class _PomodoroPageState extends State<PomodoroPage> {
                   Obx(() => NumberPicker(
                         minValue: 1,
                         maxValue: 60,
-                        value: controller.valueTimer.value,
+                        value:
+                            Get.find<PomodoroPageController>().valueTimer.value,
                         onChanged: (value) {
-                          controller.change_timer_value(value);
+                          Get.find<PomodoroPageController>()
+                              .change_timer_value(value);
                         },
                       ))
                 ],
@@ -109,9 +118,11 @@ class _PomodoroPageState extends State<PomodoroPage> {
                     () => NumberPicker(
                       minValue: 1,
                       maxValue: 60,
-                      value: controller.valueBreak.value,
+                      value:
+                          Get.find<PomodoroPageController>().valueBreak.value,
                       onChanged: (value) {
-                        controller.change_break_value(value);
+                        Get.find<PomodoroPageController>()
+                            .change_break_value(value);
                       },
                     ),
                   )
@@ -119,7 +130,9 @@ class _PomodoroPageState extends State<PomodoroPage> {
               ),
               TextButton(
                 onPressed: () {
-                  _controller.restart(duration: controller.valueTimer.value);
+                  _controller.restart(
+                      duration:
+                          Get.find<PomodoroPageController>().valueTimer.value);
                 },
                 child: const Text("Set!"),
               )

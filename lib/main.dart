@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stopwatch/bindings/ControllerBindings.dart';
 import 'package:stopwatch/screens/landingpage/view/LandingPage.dart';
 
 void main() {
@@ -11,9 +12,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
+      initialBinding: ControllerBindings(),
       debugShowCheckedModeBanner: false,
-      home: LandingPage(),
+      home: const LandingPage(),
     );
   }
 }
