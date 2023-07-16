@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stopwatch/screens/alarmpage/views/AlarmPage.dart';
 import 'package:stopwatch/screens/pomodoropage/view/PomodoroPage.dart';
 import 'package:stopwatch/screens/stopwatchpage/view/StopWatchPage.dart';
 
@@ -13,6 +14,7 @@ class _LandingPageState extends State<LandingPage> {
   final List<Widget> pages = [
     const StopWatchPage(),
     const PomodoroPage(),
+    const AlarmPage(),
   ];
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:stopwatch/screens/stopwatchpage/controller/StopWatchPageController.dart';
+import 'package:stopwatch/utils/Utils.dart';
 
 class StopWatchPage extends StatefulWidget {
   const StopWatchPage({super.key});
@@ -14,7 +15,7 @@ class _StopWatchPageState extends State<StopWatchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0E1116),
+      backgroundColor: Utils.backgroundColor,
       body: SafeArea(
         child: Center(
           child: Column(

@@ -7,6 +7,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:stopwatch/screens/pomodoropage/controller/PomodoroPageController.dart';
+import 'package:stopwatch/utils/Utils.dart';
 
 class PomodoroPage extends StatefulWidget {
   const PomodoroPage({super.key});
@@ -21,7 +22,7 @@ class _PomodoroPageState extends State<PomodoroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0E1116),
+      backgroundColor: Utils.backgroundColor,
       body: SafeArea(
         child: Center(
           child: Column(
